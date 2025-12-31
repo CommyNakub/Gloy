@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Login - Passcode</title>
+    <link href="https://fonts.googleapis.com/css2?family=Mali:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #121212; 
+            --mint-color: #69F0AE;
+            --error-color: #ff4d6d;
+            --text-main: #ffffff;
+            --key-bg: #2a2a2a;
+        }
+
+        * {
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+            user-select: none;
+        }
+
+        body {
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-color: var(--bg-color);
+            font-family: 'Mali', cursive;
+            color: var(--text-main);
+            overflow: hidden; /* ป้องกัน scrollbar จากหัวใจ */
+            position: relative;
+        }
+
+        /* --- ระบบพื้นหลังหัวใจ --- */
+        #heart-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none; /* กดทะลุได้ */
+            z-index: 1;
+        }
+
+        .floating-heart {
+            position: absolute;
+            bottom: -50px;
+            color: var(--mint-color);
+            opacity: 0.6;
+            font-size: 20px;
+            animation: moveUp var(--duration) linear forwards;
+        }
+
+        @keyframes moveUp {
+            0% {
+                transform: translateY(0) rotate(0deg);
+                opacity: 0;
+            }
+            20% { opacity: 0.6; }
+            80% { opacity: 0.6; }
+            100% {
+                transform: translateY(-110vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        /* --- UI หลัก --- */
+        .container {
+            position: relative;
+            z-index: 10;
+            text-align: center;
+            background: rgba(42, 42, 42, 0.6); /* โปร่งแสงนิดๆ ให้เห็นหัวใจข้างหลัง */
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            padding: 30px 25px;
+            border-radius: 40px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            width: 100%;
+            max-width: 380px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.4);
+        }
+
+        /* เอฟเฟกต์สั่น */
+        .shake { animation: shake 0.4s; }
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-10px); }
+            75% { transform: translateX(10px); }
+        }
+
+        h2 { color: var(--mint-color); margin-bottom: 5px; font-size: 1.4rem; }
+        p { color: #aaa; font-size: 0.85rem; margin-bottom: 30px; }
+
+        .dots-container {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 40px;
+        }
+
+        .dot {
+            width: 14px;
+            height: 14px;
+            border: 2px solid #555;
+            border-radius: 50%;
+            transition: all 0.2s;
+        }
+
+        .dot.active {
+            background-color: var(--mint-color);
+            border-color: var(--mint-color);
+        }
+
+        .dot.error {
+            border-color: var(--error-color);
+            background-color: var(--error-color);
+        }
+
+        .keypad {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            justify-items: center;
+        }
+
+        .key {
+            width: 75px;
+            height: 75px;
+            background: var(--key-bg);
+            border-radius: 50%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            border: none;
+            color: white;
+            transition: 0.1s;
+        }
+
+        .key:active { background: #444; transform: scale(0.9); }
+        .key .num { font-size: 1.8rem; font-weight: bold; line-height: 1; }
+        .key .abc { font-size: 0.6rem; color: #888; margin-top: 2px; }
+
+        #error-msg {
+            color: var(--error-color);
+            font-size: 0.85rem;
+            margin-top: 20px;
+            height: 20px;
+            opacity: 0;
+        }
+
+        @media (max-height: 650px) {
+            .key { width: 60px; height: 60px; }
+            .container { padding: 20px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="heart-container"></div>
+
+    <div class="container" id="login-section">
+        <h2>กรอกรหัสผ่าน</h2>
+        <p>คำใบ้ : รหัสผ่านคือวันเกิด (ววดดปป)</p>
+        
+        <div class="dots-container">
+            <div class="dot"></div><div class="dot"></div><div class="dot"></div>
+            <div class="dot"></div><div class="dot"></div><div class="dot"></div>
+        </div>
+
+        <div class="keypad">
+            <button class="key" onclick="press('1')"><span class="num">1</span><span class="abc">&nbsp;</span></button>
+            <button class="key" onclick="press('2')"><span class="num">2</span><span class="abc">ABC</span></button>
+            <button class="key" onclick="press('3')"><span class="num">3</span><span class="abc">DEF</span></button>
+            <button class="key" onclick="press('4')"><span class="num">4</span><span class="abc">GHI</span></button>
+            <button class="key" onclick="press('5')"><span class="num">5</span><span class="abc">JKL</span></button>
+            <button class="key" onclick="press('6')"><span class="num">6</span><span class="abc">MNO</span></button>
+            <button class="key" onclick="press('7')"><span class="num">7</span><span class="abc">PQRS</span></button>
+            <button class="key" onclick="press('8')"><span class="num">8</span><span class="abc">TUV</span></button>
+            <button class="key" onclick="press('9')"><span class="num">9</span><span class="abc">WXYZ</span></button>
+            <div style="width:75px"></div>
+            <button class="key" onclick="press('0')"><span class="num">0</span><span class="abc">&nbsp;</span></button>
+            <button class="key" style="background:transparent;" onclick="del()">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="white"><path d="M22 3H7c-.69 0-1.23.35-1.59.88L0 12l5.41 8.11c.36.53.9.89 1.59.89h15c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H7.07L2.4 12l4.66-7H22v14zm-11.59-2L14 13.41 17.59 17 19 15.59 15.41 12 19 8.41 17.59 7 14 10.59 10.41 7 9 8.41 12.59 12 9 15.59z"/></svg>
+            </button>
+        </div>
+        <div id="error-msg">เอาใหม่ รหัสผ่านม่ายถูกกกกกก</div>
+    </div>
+
+    <script>
+        // --- ส่วนการสร้างหัวใจ ---
+        const heartContainer = document.getElementById('heart-container');
+        function createHeart() {
+            const heart = document.createElement('div');
+            heart.classList.add('floating-heart');
+            heart.innerHTML = '❤';
+            
+            // สุ่มตำแหน่ง
+            const startX = Math.random() * 100; // 0-100vw
+            const duration = Math.random() * 3 + 4; // 4-7 วินาที
+            const size = Math.random() * 15 + 10; // 10-25px
+
+            heart.style.left = startX + 'vw';
+            heart.style.setProperty('--duration', duration + 's');
+            heart.style.fontSize = size + 'px';
+
+            heartContainer.appendChild(heart);
+
+            // ลบเมื่อทำงานเสร็จ
+            setTimeout(() => { heart.remove(); }, duration * 1000);
+        }
+
+        // เริ่มสร้างหัวใจ
+        setInterval(createHeart, 400);
+
+        // --- ระบบรหัสผ่าน ---
+        let currentPass = "";
+        const correctPassword = "060152"; 
+        const dots = document.querySelectorAll('.dot');
+        const container = document.getElementById('login-section');
+        const errorMsg = document.getElementById('error-msg');
+
+        function updateDots() {
+            dots.forEach((dot, index) => {
+                if (index < currentPass.length) dot.classList.add('active');
+                else { dot.classList.remove('active'); dot.classList.remove('error'); }
+            });
+        }
+
+        function press(num) {
+            if (currentPass.length < 6) {
+                currentPass += num;
+                updateDots();
+                errorMsg.style.opacity = '0';
+                if (currentPass.length === 6) setTimeout(checkPassword, 200);
+            }
+        }
+
+        function del() {
+            if (currentPass.length > 0) {
+                currentPass = currentPass.slice(0, -1);
+                updateDots();
+            }
+        }
+
+        function checkPassword() {
+            if (currentPass === correctPassword) {
+                dots.forEach(d => d.style.backgroundColor = "var(--mint-color)");
+                setTimeout(() => { window.location.href = 'question.html'; }, 500);
+            } else {
+                errorMsg.style.opacity = '1';
+                container.classList.add('shake');
+                dots.forEach(d => d.classList.add('error'));
+                setTimeout(() => {
+                    container.classList.remove('shake');
+                    currentPass = "";
+                    updateDots();
+                }, 600);
+            }
+        }
+    </script>
+</body>
+</html>

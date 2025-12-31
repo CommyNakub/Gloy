@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Question - Anniversary Gift</title>
+    <link href="https://fonts.googleapis.com/css2?family=Mali:wght@400;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --bg-color: #0f0f0f;
+            --pink-dark: #ff4d6d;
+            --mint-color: #69F0AE;
+            --mint-hover: #2ed573;
+            --text-color: #ffffff;
+        }
+
+        * {
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+            font-family: 'Mali', cursive;
+            -webkit-tap-highlight-color: transparent;
+            touch-action: manipulation;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            background-image: radial-gradient(circle at center, #222 0%, #0f0f0f 100%);
+            color: var(--text-color);
+            overflow: hidden; /* ป้องกัน scroll ทั้งหน้า */
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .heart-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .container {
+            width: 100%;
+            max-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 15px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .question-card {
+            text-align: center;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            padding: clamp(20px, 4vh, 40px) 20px;
+            border-radius: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            max-width: 400px;
+            width: 100%;
+            max-height: 90vh; /* ป้องกันการ์ดยาวเกินจอ */
+            overflow-y: auto; /* ให้เลื่อนดูในตัวการ์ดได้ถ้าปุ่มใหญ่มาก */
+            box-shadow: 0 30px 60px rgba(0,0,0,0.6);
+            transition: all 0.3s ease;
+        }
+
+        /* ซ่อน scrollbar สำหรับการ์ด */
+        .question-card::-webkit-scrollbar { width: 0; }
+
+        .gif-container {
+            width: 100%;
+            height: clamp(120px, 20vh, 180px);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        img {
+            max-height: 100%;
+            max-width: 100%;
+            border-radius: 20px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+            object-fit: contain;
+        }
+
+        h1 {
+            font-size: clamp(1.2rem, 5vw, 1.8rem);
+            margin-bottom: 20px;
+            font-weight: 700;
+            line-height: 1.4;
+        }
+
+        .btn-group {
+            display: flex;
+            flex-direction: column; /* วางปุ่มเป็นแนวตั้งเพื่อรองรับการขยาย */
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            width: 100%;
+        }
+
+        button {
+            border: none;
+            border-radius: 50px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            font-family: 'Mali', cursive;
+            word-wrap: break-word;
+            max-width: 100%; /* ห้ามปุ่มล้นขอบ */
+        }
+
+        #yesBtn {
+            background: linear-gradient(135deg, var(--mint-color), var(--mint-hover));
+            color: #000;
+            padding: 14px 30px;
+            font-size: 1.1rem;
+            box-shadow: 0 8px 20px rgba(105, 240, 174, 0.3);
+            order: 1; /* ให้ปุ่ม Yes อยู่บนเสมอเมื่อขยาย */
+        }
+
+        #noBtn {
+            background-color: #2a2a2a;
+            color: #888;
+            padding: 10px 25px;
+            font-size: 0.9rem;
+            border: 1px solid #3d3d3d;
+            order: 2;
+        }
+
+        #noBtn:active {
+            background-color: var(--pink-dark);
+            color: white;
+            transform: scale(0.9);
+        }
+
+        /* สำหรับหน้าจอ Desktop ให้ปุ่มวางข้างกันในช่วงแรก */
+        @media (min-width: 600px) {
+            .btn-group:not(.vertical) {
+                flex-direction: row;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="heart-bg" id="heartBg"></div>
+
+    <div class="container">
+        <div class="question-card" id="mainCard">
+            <div class="gif-container">
+                <img id="mainGif" src="https://i.pinimg.com/originals/a4/cd/4d/a4cd4d37d90e1185047d4bc59e0ce52d.gif" alt="Cute GIF">
+            </div>
+
+            <h1 id="questionText">เทอรักเค้ามั้ยยยย?</h1>
+
+            <div class="btn-group" id="btnContainer">
+                <button id="yesBtn" onclick="goToSuccess()">รักกกกกกกก</button>
+                <button id="noBtn" onclick="handleNoClick()">ไม่รัก</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const noBtn = document.getElementById('noBtn');
+        const yesBtn = document.getElementById('yesBtn');
+        const mainGif = document.getElementById('mainGif');
+        const questionText = document.getElementById('questionText');
+        const heartBg = document.getElementById('heartBg');
+        const btnContainer = document.getElementById('btnContainer');
+
+        let noCount = 0;
+
+        const noMessages = ["แน่ใจหรอออ", "คิดดีๆ นะบี๋", "เสียใจเด้นิ", "ให้โอกาสอีกรอบ", "อีกรอบบบบบบ!!", "บี๋๋๋๋ 😡"];
+        const noGifs = [
+            "https://i.pinimg.com/originals/53/1d/c8/531dc894331c308b81b42757eb36fb79.gif",
+            "https://i.pinimg.com/originals/0f/51/64/0f51643ae5860d61db057a1879cf2f36.gif",
+            "https://media.tenor.com/pg4wTu1OdDUAAAAM/baro.gif",
+            "https://i.pinimg.com/originals/8a/2b/66/8a2b66f383b7d2836300f0f95f4c22a6.gif"
+        ];
+
+        function createHeart() {
+            const heart = document.createElement('div');
+            heart.innerHTML = '❤️';
+            heart.style.position = 'absolute';
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.top = '105vh';
+            heart.style.fontSize = (Math.random() * 15 + 10) + 'px';
+            heart.style.opacity = Math.random() * 0.5 + 0.3;
+            heartBg.appendChild(heart);
+
+            const duration = Math.random() * 3 + 3;
+            heart.animate([
+                { transform: `translateY(0) rotate(0deg)` },
+                { transform: `translateY(-110vh) rotate(${Math.random() * 360}deg)` }
+            ], { duration: duration * 1000, easing: 'linear' });
+
+            setTimeout(() => heart.remove(), duration * 1000);
+        }
+
+        setInterval(createHeart, 450);
+
+        function handleNoClick() {
+            noCount++;
+            
+            // เปลี่ยน Layout เป็นแนวตั้งทันทีที่เริ่มกด No
+            btnContainer.classList.add('vertical');
+
+            // เปลี่ยนข้อความ No
+            noBtn.innerText = noMessages[noCount % noMessages.length];
+
+            // สุ่มเปลี่ยน GIF
+            mainGif.src = noGifs[noCount % noGifs.length];
+
+            // ขยายปุ่ม Yes (จำกัดขนาดสูงสุดเพื่อไม่ให้ล้น Card)
+            const fontSize = Math.min(1.1 + (noCount * 0.4), 4); // Max 4rem
+            const paddingV = Math.min(14 + (noCount * 12), 60); 
+            const paddingH = Math.min(30 + (noCount * 15), 80);
+
+            yesBtn.style.fontSize = `${fontSize}rem`;
+            yesBtn.style.padding = `${paddingV}px ${paddingH}px`;
+            yesBtn.style.width = "100%"; // ให้ขยายเต็มความกว้างการ์ด
+
+            if (noCount > 5) {
+                questionText.innerText = "บี๋กดรักเค้าเถ้อออออ 🙏";
+                noBtn.style.display = 'none';
+            }
+
+            if (navigator.vibrate) navigator.vibrate(50);
+        }
+
+        function goToSuccess() {
+            // 1. เปลี่ยนข้อความและสถานะปุ่ม
+            yesBtn.innerText = "เย้้้ ร้ากเหมือนกานนนน รอแป๊บน้าาา❤️";
+            yesBtn.disabled = true; // ป้องกันการกดซ้ำ
+            yesBtn.style.cursor = "default";
+            yesBtn.style.transform = "scale(1.05)";
+            
+            // 2. เปลี่ยน GIF เป็นท่าดีใจ
+            mainGif.src = "https://i.pinimg.com/originals/9b/3e/32/9b3e3277747761041139f40899264c12.gif";
+
+            // 3. เริ่มนับถอยหลังเพื่อจางหาย (เริ่มจางที่วินาทีที่ 2.5 เพื่อความสมูท)
+            setTimeout(() => {
+                const mainCard = document.getElementById('mainCard');
+                mainCard.style.opacity = "0";
+                mainCard.style.transform = "scale(0.9) translateY(-20px)";
+                mainCard.style.transition = "all 0.5s ease";
+            }, 2500);
+
+            // 4. ไปอีกหน้าหลังจากครบ 3 วินาที
+            setTimeout(() => {
+                window.location.href = 'home.html';
+            }, 3000);
+            
+            // สั่นมือถือแสดงความดีใจ
+            if (navigator.vibrate) navigator.vibrate([100, 50, 100]);
+        }
+    </script>
+</body>
+</html>
