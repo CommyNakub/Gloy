@@ -302,7 +302,7 @@
         .video-section {
             background-color: var(--bg-2);
             padding: 80px 20px;
-            min-height: 80vh;
+            min-height: 60vh;
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -313,7 +313,7 @@
             }
 
             .song{
-                padding-top: 50px;
+                padding-top: 90px;
                 font-size: 20px;
             }
         }
@@ -336,6 +336,62 @@
             left: 0;
             width: 100%;
             height: 100%;
+        }
+
+        /* --- Footer Section --- */
+        footer {
+            background-color: var(--nav-bg);
+            color: var(--text-sec);
+            padding: 40px 20px;
+            text-align: center;
+            border-top: 1px solid #333;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .footer-logo {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: var(--text-main);
+        }
+
+        .footer-logo span {
+            color: var(--mint-color);
+        }
+
+        .footer-text {
+            font-size: 0.9rem;
+            font-weight: 300;
+            margin-bottom: 20px;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .social-links a {
+            color: var(--text-sec);
+            font-size: 0.85rem;
+            transition: color 0.3s ease;
+            border-bottom: 1px solid transparent;
+        }
+
+        .social-links a:hover {
+            color: var(--mint-color);
+            border-bottom: 1px solid var(--mint-color);
+        }
+
+        .copyright {
+            font-size: 0.75rem;
+            opacity: 0.6;
+            letter-spacing: 1px;
         }
 
         /* --- Mobile Responsive --- */
@@ -465,7 +521,7 @@
 
             <div class="gift-card">
                 <div class="card-top web" >
-                    <img src="webhbd.png">
+                    <img src="/img/webhbd.png">
                 </div>
                 <div class="card-info">
                     <h3>เว็บไซต์อวยพรวันเกิด</h3>
@@ -487,9 +543,29 @@
         </div>
 
         <div class="song">
-            <p>รักแรกพบ Tattoo colour</p>
+            <p>รักแรกพบ - Tattoo colour</p>
         </div>
     </section>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-logo">
+                <span>HBD</span> Chotirot
+            </div>
+            <p class="footer-text">เว็บไซต๋นี้ทำขึ้นเพื่ออวยพรวันเกิดคนสวย <br>และสามารถเปิดดูได้ตลอดเวลา </p>
+            
+            <div class="social-links">
+                <a href="#hero">Home</a>
+                <a href="#wishes">Wishes</a>
+                <a href="#gift">Gifts</a>
+                <a href="#video">Video</a>
+            </div>
+
+            <div class="copyright">
+                &copy; 2026 Crafted by Commyeiei
+            </div>
+        </div>
+    </footer>
 
     <script>
         const navSlide = () => {
@@ -545,6 +621,4 @@
     </script>
 
 </body>
-
 </html>
-
