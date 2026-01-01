@@ -2,623 +2,269 @@
 <html lang="th">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Happy Birthday</title>
-    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;600&display=swap" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Question - Anniversary Gift</title>
+    <link href="https://fonts.googleapis.com/css2?family=Mali:wght@400;700&display=swap" rel="stylesheet">
     
     <style>
-        /* --- Modern Color Palette --- */
         :root {
-            --bg-color: #121212;
-            --bg-2: #222222;
-            --nav-bg: #1A1A1A;
+            --bg-color: #0f0f0f;
+            --pink-dark: #ff4d6d;
             --mint-color: #69F0AE;
-            --text-main: #FFFFFF;
-            --text-sec: #B0B0B0;
-            --card-bg: #32363e;
-            /* เพิ่มตัวแปรความสูง Navbar เพื่อจัดการระยะห่าง */
-            --nav-height: 70px;
+            --mint-hover: #2ed573;
+            --text-color: #ffffff;
         }
 
         * {
-            margin: 0;
             padding: 0;
+            margin: 0;
             box-sizing: border-box;
-        }
-        html{
-            scroll-behavior: smooth;
-            /* แก้ปัญหาเวลาเลื่อนไปตาม ID แล้วหัวข้อโดน Navbar บัง */
-            scroll-padding-top: var(--nav-height);
+            font-family: 'Mali', cursive;
+            -webkit-tap-highlight-color: transparent;
+            touch-action: manipulation;
         }
 
         body {
             background-color: var(--bg-color);
-            color: var(--text-main);
-            font-family: 'Kanit', sans-serif;
-            overflow-x: hidden;
-            /* ดันเนื้อหาทั้งหมดลงมาไม่ให้โดน Navbar ทับตั้งแต่เริ่ม */
-            padding-top: var(--nav-height);
+            background-image: radial-gradient(circle at center, #222 0%, #0f0f0f 100%);
+            color: var(--text-color);
+            overflow: hidden; /* ป้องกัน scroll ทั้งหน้า */
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
-        /* --- Navbar --- */
-        nav {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 0 8%;
-            height: var(--nav-height); /* กำหนดความสูงที่แน่นอน */
-            background-color: var(--nav-bg);
-            border-bottom: 1px solid #333;
+        .heart-bg {
             position: fixed;
-            width: 100%;
-            top: 0;
-            z-index: 1000;
-        }
-
-        a{
-            text-decoration: none;
-            color: var(--text-main);
-        }
-        .logo {
-            font-size: 1.4rem;
-            font-weight: 600;
-            letter-spacing: 1px;
-            text-transform: uppercase;
-        }
-        .logo .hbd {
-            color: var(--mint-color);
-        }
-
-        .nav-links {
-            list-style: none;
-            display: flex;
-            gap: 50px;
-        }
-
-        .nav-links a {
-            text-decoration: none;
-            color: var(--text-main);
-            font-size: 1rem;
-            font-weight: 300;
-            transition: color 0.3s ease;
-        }
-
-        .nav-links a:hover {
-            color: var(--mint-color);
-        }
-
-        /* --- Hamburger --- */
-        .hamburger {
-            display: none;
-            cursor: pointer;
-        }
-
-        .hamburger div {
-            width: 24px;
-            height: 2px;
-            background-color: var(--text-main);
-            margin: 6px;
-            transition: all 0.3s ease;
-        }
-
-        /* --- Hero Section --- */
-        .hero {
-            /* ปรับความสูงหักลบกับ Navbar */
-            height: calc(100vh - var(--nav-height));
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
-            text-align: center;
-        }
-
-        h1 {
-            font-size: clamp(2.5rem, 7vw, 3.5rem);
-            font-weight: 600;
-            color: var(--text-main);
-            line-height: 1.1;
-            margin-bottom: 27px;
-        }
-
-        h1 span {
-            color: var(--mint-color);
-        }
-
-        p.message {
-            font-size: 1.1rem;
-            color: var(--text-sec);
-            max-width: 500px;
-            line-height: 1.7;
-            margin-bottom: 40px;
-            font-weight: 300;
-        }
-
-        .btn-wish {
-            padding: 14px 35px;
-            background-color: transparent;
-            border: 1px solid var(--mint-color);
-            color: var(--mint-color);
-            font-size: 1rem;
-            font-family: 'Kanit', sans-serif;
-            cursor: pointer;
-            border-radius: 4px;
-            transition: all 0.3s ease;
-        }
-
-        .btn-wish:hover {
-            background-color: var(--mint-color);
-            color: var(--bg-color);
-        }
-
-        /* --- Wishes Section --- */
-        .wishes {
-            background-color: var(--bg-2);
-            min-height: 100vh; 
-            width: 100%;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            padding: 80px 20px; 
-        }
-
-        .maintext {
-            color: var(--mint-color);
-            margin-bottom: 2rem;
-            text-align: center;
-        }
-        
-        .maintext h2 {
-            font-size: 1.8rem;
-            font-weight: 600;
-        }
-
-        .wishestext {
-            max-width: 700px;
-            width: 100%;
-            font-size: 1.1rem;
-            line-height: 1.8;
-            text-align: center;
-            color: var(--text-main);
-            background: rgba(255, 255, 255, 0.03);
-            padding: 30px;
-            border-radius: 15px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .wishestext b {
-            color: var(--mint-color);
-            display: block;
-            margin-top: 20px;
-            font-size: 1.2rem;
-        }
-
-        .gif {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            width: 100%;
-            margin-top: 40px;
-        }
-
-        .gif img {
-            width: 80%; 
-            max-width: 350px; 
-            height: auto;
-            border-radius: 15px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
-
-        .gif img:hover {
-            transform: scale(1.05) rotate(-2deg);
-        }
-
-        /* --- Gift Section (Fixed 2x2) --- */
-        .gift-section {
-            padding: 80px 5%;
-            background-color: var(--bg-color);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        .gift-container {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr); 
-            gap: 20px;
-            width: 100%;
-            max-width: 900px;
-        }
-
-        .gift-card {
-            background-color: var(--card-bg);
-            border-radius: 15px;
-            overflow: hidden;
-            text-align: center;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.3);
-            transition: transform 0.3s ease;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .gift-card:hover {
-            transform: translateY(-5px);
-        }
-
-        .card-top {
-            height: clamp(150px, 25vw, 250px);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 15px;
-            background: #fff;
-        }
-
-        .card-top img {
-            max-width: 100%;
-            max-height: 100%;
-            object-fit: contain;
-        }
-
-        .card-info {
-            padding: 15px;
-            flex-grow: 1;
-        }
-
-        .card-info h3 {
-            font-size: clamp(0.9rem, 2vw, 1.2rem);
-            margin-bottom: 8px;
-        }
-
-        .card-info .price {
-            color: var(--mint-color);
-            font-size: clamp(1.1rem, 3vw, 1.5rem);
-            font-weight: 600;
-        }
-
-        .total-price-box {
-            margin-top: 40px;
-            padding: 20px 40px;
-            background: var(--card-bg);
-            border: 2px solid var(--mint-color);
-            border-radius: 12px;
-            text-align: center;
-            box-shadow: 0 0 15px rgba(105, 240, 174, 0.2);
-        }
-        .total-price-box span {
-            display: block;
-            font-size: 0.9rem;
-            color: var(--text-sec);
-            text-transform: uppercase;
-        }
-        .total-price-box h4 {
-            font-size: 1.8rem;
-            color: var(--mint-color);
-        }
-
-        /* --- Video Section (Responsive Adjustment) --- */
-        .video-section {
-            background-color: var(--bg-2);
-            padding: 80px 20px;
-            min-height: 60vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-
-            .maintext{
-                padding-bottom: 50px;
-            }
-
-            .song{
-                padding-top: 90px;
-                font-size: 20px;
-            }
-        }
-
-        .video-container {
-            width: 100%;
-            max-width: 800px;
-            position: relative;
-            padding-bottom: 56.25%; /* อัตราส่วน 16:9 */
-            height: 0;
-            border-radius: 15px;
-            overflow: hidden;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.5);
-            border: 2px solid var(--mint-color);
-        }
-
-        .video-container iframe {
-            position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
+            pointer-events: none;
+            z-index: 0;
         }
 
-        /* --- Footer Section --- */
-        footer {
-            background-color: var(--nav-bg);
-            color: var(--text-sec);
-            padding: 40px 20px;
-            text-align: center;
-            border-top: 1px solid #333;
-        }
-
-        .footer-content {
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .footer-logo {
-            font-size: 1.2rem;
-            font-weight: 600;
-            margin-bottom: 10px;
-            color: var(--text-main);
-        }
-
-        .footer-logo span {
-            color: var(--mint-color);
-        }
-
-        .footer-text {
-            font-size: 0.9rem;
-            font-weight: 300;
-            margin-bottom: 20px;
-        }
-
-        .social-links {
+        .container {
+            width: 100%;
+            max-height: 100vh;
             display: flex;
             justify-content: center;
-            gap: 20px;
+            align-items: center;
+            padding: 15px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .question-card {
+            text-align: center;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            padding: clamp(20px, 4vh, 40px) 20px;
+            border-radius: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            max-width: 400px;
+            width: 100%;
+            max-height: 90vh; /* ป้องกันการ์ดยาวเกินจอ */
+            overflow-y: auto; /* ให้เลื่อนดูในตัวการ์ดได้ถ้าปุ่มใหญ่มาก */
+            box-shadow: 0 30px 60px rgba(0,0,0,0.6);
+            transition: all 0.3s ease;
+        }
+
+        /* ซ่อน scrollbar สำหรับการ์ด */
+        .question-card::-webkit-scrollbar { width: 0; }
+
+        .gif-container {
+            width: 100%;
+            height: clamp(120px, 20vh, 180px);
+            display: flex;
+            justify-content: center;
+            align-items: center;
             margin-bottom: 20px;
         }
 
-        .social-links a {
-            color: var(--text-sec);
-            font-size: 0.85rem;
-            transition: color 0.3s ease;
-            border-bottom: 1px solid transparent;
+        img {
+            max-height: 100%;
+            max-width: 100%;
+            border-radius: 20px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+            object-fit: contain;
         }
 
-        .social-links a:hover {
-            color: var(--mint-color);
-            border-bottom: 1px solid var(--mint-color);
+        h1 {
+            font-size: clamp(1.2rem, 5vw, 1.8rem);
+            margin-bottom: 20px;
+            font-weight: 700;
+            line-height: 1.4;
         }
 
-        .copyright {
-            font-size: 0.75rem;
-            opacity: 0.6;
-            letter-spacing: 1px;
+        .btn-group {
+            display: flex;
+            flex-direction: column; /* วางปุ่มเป็นแนวตั้งเพื่อรองรับการขยาย */
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            width: 100%;
         }
 
-        /* --- Mobile Responsive --- */
-        @media screen and (max-width: 768px) {
-            :root { --nav-height: 60px; }
-            h1 { font-size: 2.8rem; }
-            nav { padding: 0 20px; }
-            .hamburger { display: block; }
+        button {
+            border: none;
+            border-radius: 50px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            font-family: 'Mali', cursive;
+            word-wrap: break-word;
+            max-width: 100%; /* ห้ามปุ่มล้นขอบ */
+        }
 
-            .nav-links {
-                position: absolute;
-                padding-top: 30px;
-                right: 0;
-                top: var(--nav-height);
-                height: auto;
-                padding-bottom: 30px;
-                background-color: var(--nav-bg);
-                flex-direction: column;
-                align-items: center;
-                width: 100%;
-                transform: translateX(100%);
-                transition: transform 0.4s ease;
-                border-bottom: 1px solid #333;
-                z-index: 999;
-                gap: 50px;
+        #yesBtn {
+            background: linear-gradient(135deg, var(--mint-color), var(--mint-hover));
+            color: #000;
+            padding: 14px 30px;
+            font-size: 1.1rem;
+            box-shadow: 0 8px 20px rgba(105, 240, 174, 0.3);
+            order: 1; /* ให้ปุ่ม Yes อยู่บนเสมอเมื่อขยาย */
+        }
+
+        #noBtn {
+            background-color: #2a2a2a;
+            color: #888;
+            padding: 10px 25px;
+            font-size: 0.9rem;
+            border: 1px solid #3d3d3d;
+            order: 2;
+        }
+
+        #noBtn:active {
+            background-color: var(--pink-dark);
+            color: white;
+            transform: scale(0.9);
+        }
+
+        /* สำหรับหน้าจอ Desktop ให้ปุ่มวางข้างกันในช่วงแรก */
+        @media (min-width: 600px) {
+            .btn-group:not(.vertical) {
+                flex-direction: row;
+                justify-content: center;
             }
-
-            .nav-active { transform: translateX(0%); }
-
-            .gift-container {
-                gap: 10px;
-            }
-            .card-info { padding: 10px; }
-            .video-container { 
-                max-width: 95%; 
-                padding-bottom: 56.25%; /* รักษาอัตราส่วนในมือถือ */
-            }
         }
-
-        @keyframes navLinkFade {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        .toggle .line1 { transform: rotate(-45deg) translate(-5px, 6px); }
-        .toggle .line2 { opacity: 0; }
-        .toggle .line3 { transform: rotate(45deg) translate(-5px, -6px); }
     </style>
 </head>
 <body>
 
-    <nav>
-        <a href="#hero" class="homehbd"><div class="logo"><span class="hbd">HBD C</span>hotirot</div></a>
-        
-        <div class="hamburger">
-            <div class="line1"></div>
-            <div class="line2"></div>
-            <div class="line3"></div>
-        </div>
+    <div class="heart-bg" id="heartBg"></div>
 
-        <ul class="nav-links">
-            <li><a href="#hero">หน้าหลัก</a></li>
-            <li><a href="#wishes">คำอวยพร</a></li>
-            <li><a href="#gift">ของขวัญ</a></li>
-            <li><a href="#video">วิดีโอ</a></li>
-        </ul>
-    </nav>
-
-    <section class="hero" id="hero">
-        <div class="main-hero">
-            <h1 id="title">Happy<br><span>Birthday</span></h1>
-            <p class="message">
-                เว็บไซต์นี้สร้างขึ้นเพื่อ<br>
-                อวยพรวันเกิดคนสวยยย
-            </p>
-        </div>
-        <button class="btn-wish" onclick="toggleWish()">รับคำอวยพร</button>
-    </section>
-
-    <section class="wishes" id="wishes">
-        <div class="maintext"><h2>คำอวยพรสำหรับคนสวยยย</h2></div>
-
-        <div class="wishestext">
-            <p>สุขสานวานเกิดดดดดดด ปีนี้ 17 แล้ววว
-             ขอให้มีความสุขมากๆๆๆๆ ยิ้มเย้อออๆๆ
-              ขอให้มีแต่คนร้ากเทออออ คิดอะไรก็ขอให้สมหวัง ร่ำๆรวยๆเฮงๆ อยากได้อะไรก็ขอให้ได้ และขอบคุณสำหรับทุกอย่างที่ให้ ขอบคุณที่อยู่ด้วยกันมา ขอบคุณสำหรับความรู้สึกดีๆที่มีให้กัน ขอบคุณที่เป็นความสุขให้กันในทุกๆวัน ขอบคุณที่เป็นของขวัญให้ทุกๆเทศกาลและทุกวัน สิ่งไหนไม่ดีก็ขอให้ออกไปจาก
-               เทอด้วยสาธุ 99 อะไรที่เค้าทำไม่ดีใส่เทอเค้าขอโทษนะ บางอย่างก็ทำไปโดยไม่ได้ตั้งใจ เหนื่อยตอนไหนก็บอกนะ เค้าอยู่ตรงนี้เสมอ พักผ่อนเย้อออๆๆ สุขสันต์วันปีใหม่ย้อนหลัง ขอให้ปีนี้เป็นปีที่ดีที่สุดของเทอออออ<br>
-                <b>"อยู่ด้วยกันไปนานๆด้วย เค้ารักเทอนะ"</b></p>
-        </div>
-
-        <div class="gif">
-            <img src="https://media.licdn.com/dms/image/v2/D4E22AQE_YGouWOnNEQ/feedshare-shrink_800/B4EZPqKj9MHkAg-/0/1734800458551?e=2147483647&v=beta&t=ZI1aIQ6j1QW6NnOrwh-vgY3Yz0vRBDHjt6iXmtbNzgM">
-        </div>
-    </section>
-
-    <section class="gift-section" id="gift">
-        <div class="maintext"><h2>ของขวัญวันเกิด</h2></div>
-        <div class="gift-container">
-            <div class="gift-card">
-                <div class="card-top">
-                    <img src="https://d2cva83hdk3bwc.cloudfront.net/pm-fgcpmhrsfc581-pop-mart-voyage-hirono-reshape-series-figures-1.jpg">
-                </div>
-                <div class="card-info">
-                    <h3>Hirono v5 Yoyage</h3>
-                    <div class="price">฿559</div>
-                </div>
+    <div class="container">
+        <div class="question-card" id="mainCard">
+            <div class="gif-container">
+                <img id="mainGif" src="https://i.pinimg.com/originals/a4/cd/4d/a4cd4d37d90e1185047d4bc59e0ce52d.gif" alt="Cute GIF">
             </div>
 
-            <div class="gift-card">
-                <div class="card-top">
-                    <img src="https://down-th.img.susercontent.com/file/th-11134207-81zte-mhn1gy4hhq8542.webp">
-                </div>
-                <div class="card-info">
-                    <h3>กำไลข้อมือ Jewelry</h3>
-                    <div class="price">฿149</div>
-                </div>
-            </div>
+            <h1 id="questionText">เทอรักเค้ามั้ยยยย?</h1>
 
-            <div class="gift-card">
-                <div class="card-top">
-                    <img src="https://down-th.img.susercontent.com/file/sg-11134201-7rd5q-lw62ly7fm2e6bc@resize_w450_nl.webp">
-                </div>
-                <div class="card-info">
-                    <h3>เทปบันทึกเสียง</h3>
-                    <div class="price">฿69</div>
-                </div>
-            </div>
-
-            <div class="gift-card">
-                <div class="card-top web" >
-                    <img src="/img/webhbd.png">
-                </div>
-                <div class="card-info">
-                    <h3>เว็บไซต์อวยพรวันเกิด</h3>
-                    <div class="price">฿0</div>
-                </div>
+            <div class="btn-group" id="btnContainer">
+                <button id="yesBtn" onclick="goToSuccess()">รักกกกกกกก</button>
+                <button id="noBtn" onclick="handleNoClick()">ไม่รัก</button>
             </div>
         </div>
-
-        <div class="total-price-box">
-            <span>รวมราคาของขวัญทั้งหมด</span>
-            <h4>฿777</h4>
-        </div>
-    </section>
-
-    <section class="video-section" id="video">
-        <div class="maintext"><h2>วิดีโอสำหรับเทอออออ</h2></div>
-        <div class="video-container">
-            <iframe src="https://www.youtube.com/embed/9pmNPUbjl9g?si=DxKnsJqOpx75mUQs" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-        </div>
-
-        <div class="song">
-            <p>รักแรกพบ - Tattoo colour</p>
-        </div>
-    </section>
-
-    <footer>
-        <div class="footer-content">
-            <div class="footer-logo">
-                <span>HBD</span> Chotirot
-            </div>
-            <p class="footer-text">เว็บไซต๋นี้ทำขึ้นเพื่ออวยพรวันเกิดคนสวย <br>และสามารถเปิดดูได้ตลอดเวลา </p>
-            
-            <div class="social-links">
-                <a href="#hero">Home</a>
-                <a href="#wishes">Wishes</a>
-                <a href="#gift">Gifts</a>
-                <a href="#video">Video</a>
-            </div>
-
-            <div class="copyright">
-                &copy; 2026 Crafted by Commyeiei
-            </div>
-        </div>
-    </footer>
+    </div>
 
     <script>
-        const navSlide = () => {
-            const burger = document.querySelector('.hamburger');
-            const nav = document.querySelector('.nav-links');
-            const navLinks = document.querySelectorAll('.nav-links li');
+        const noBtn = document.getElementById('noBtn');
+        const yesBtn = document.getElementById('yesBtn');
+        const mainGif = document.getElementById('mainGif');
+        const questionText = document.getElementById('questionText');
+        const heartBg = document.getElementById('heartBg');
+        const btnContainer = document.getElementById('btnContainer');
 
-            burger.addEventListener('click', () => {
-                nav.classList.toggle('nav-active');
-                navLinks.forEach((link, index) => {
-                    if (link.style.animation) {
-                        link.style.animation = '';
-                    } else {
-                        link.style.animation = `navLinkFade 0.5s ease forwards ${index / 7 + 0.2}s`;
-                    }
-                });
-                burger.classList.toggle('toggle');
-            });
+        let noCount = 0;
 
-            // ปิดเมนูเมื่อกดลิงก์ (สำหรับ Mobile)
-            navLinks.forEach(link => {
-                link.addEventListener('click', () => {
-                    if(nav.classList.contains('nav-active')){
-                        nav.classList.remove('nav-active');
-                        burger.classList.remove('toggle');
-                        navLinks.forEach(l => l.style.animation = '');
-                    }
-                });
-            });
+        const noMessages = ["แน่ใจหรอออ", "คิดดีๆ นะบี๋", "เสียใจเด้นิ", "ให้โอกาสอีกรอบ", "อีกรอบบบบบบ!!", "บี๋๋๋๋ 😡"];
+        const noGifs = [
+            "https://i.pinimg.com/originals/53/1d/c8/531dc894331c308b81b42757eb36fb79.gif",
+            "https://i.pinimg.com/originals/0f/51/64/0f51643ae5860d61db057a1879cf2f36.gif",
+            "https://media.tenor.com/pg4wTu1OdDUAAAAM/baro.gif",
+            "https://i.pinimg.com/originals/8a/2b/66/8a2b66f383b7d2836300f0f95f4c22a6.gif"
+        ];
+
+        function createHeart() {
+            const heart = document.createElement('div');
+            heart.innerHTML = '❤️';
+            heart.style.position = 'absolute';
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.top = '105vh';
+            heart.style.fontSize = (Math.random() * 15 + 10) + 'px';
+            heart.style.opacity = Math.random() * 0.5 + 0.3;
+            heartBg.appendChild(heart);
+
+            const duration = Math.random() * 3 + 3;
+            heart.animate([
+                { transform: `translateY(0) rotate(0deg)` },
+                { transform: `translateY(-110vh) rotate(${Math.random() * 360}deg)` }
+            ], { duration: duration * 1000, easing: 'linear' });
+
+            setTimeout(() => heart.remove(), duration * 1000);
         }
 
-        navSlide();
+        setInterval(createHeart, 450);
 
-        function toggleWish() {
-            const title = document.getElementById('title');
-            const btn = document.querySelector('.btn-wish');
+        function handleNoClick() {
+            noCount++;
             
-            title.innerHTML = "เค้ารักเทอ<br><span>ที่สุดในโลกกกกก</span>";
-            btn.textContent = "รอสักครู่ หวังว่าจะชอบน้าาา";
-            btn.style.backgroundColor = "var(--mint-color)";
-            btn.style.color = "var(--bg-color)";
-            btn.style.cursor = "default";
-            btn.disabled = true;
+            // เปลี่ยน Layout เป็นแนวตั้งทันทีที่เริ่มกด No
+            btnContainer.classList.add('vertical');
 
+            // เปลี่ยนข้อความ No
+            noBtn.innerText = noMessages[noCount % noMessages.length];
+
+            // สุ่มเปลี่ยน GIF
+            mainGif.src = noGifs[noCount % noGifs.length];
+
+            // ขยายปุ่ม Yes (จำกัดขนาดสูงสุดเพื่อไม่ให้ล้น Card)
+            const fontSize = Math.min(1.1 + (noCount * 0.4), 4); // Max 4rem
+            const paddingV = Math.min(14 + (noCount * 12), 60); 
+            const paddingH = Math.min(30 + (noCount * 15), 80);
+
+            yesBtn.style.fontSize = `${fontSize}rem`;
+            yesBtn.style.padding = `${paddingV}px ${paddingH}px`;
+            yesBtn.style.width = "100%"; // ให้ขยายเต็มความกว้างการ์ด
+
+            if (noCount > 5) {
+                questionText.innerText = "บี๋กดรักเค้าแม้ะะะะะะะ";
+                noBtn.style.display = 'none';
+            }
+
+            if (navigator.vibrate) navigator.vibrate(50);
+        }
+
+        function goToSuccess() {
+            // 1. เปลี่ยนข้อความและสถานะปุ่ม
+            yesBtn.innerText = "เย้้้ ร้ากเหมือนกานนน❤️";
+            yesBtn.disabled = true; // ป้องกันการกดซ้ำ
+            yesBtn.style.cursor = "default";
+            yesBtn.style.transform = "scale(1.05)";
+            
+            // 2. เปลี่ยน GIF เป็นท่าดีใจ
+            mainGif.src = "https://i.pinimg.com/originals/a4/cd/4d/a4cd4d37d90e1185047d4bc59e0ce52d.gif";
+
+            // 3. เริ่มนับถอยหลังเพื่อจางหาย (เริ่มจางที่วินาทีที่ 2.5 เพื่อความสมูท)
             setTimeout(() => {
-                const wishesSection = document.getElementById('wishes');
-                wishesSection.scrollIntoView({ behavior: 'smooth' });
-                setTimeout(() => {
-                     btn.textContent = "ไปอ่านคำอวยพรกานนน";
-                }, 1000);
-            }, 2000); 
+                const mainCard = document.getElementById('mainCard');
+                mainCard.style.opacity = "0";
+                mainCard.style.transform = "scale(0.9) translateY(-20px)";
+                mainCard.style.transition = "all 0.5s ease";
+            }, 2500);
+
+            // 4. ไปอีกหน้าหลังจากครบ 3 วินาที
+            setTimeout(() => {
+                window.location.href = 'home.html';
+            }, 3000);
+            
+            // สั่นมือถือแสดงความดีใจ
+            if (navigator.vibrate) navigator.vibrate([100, 50, 100]);
         }
     </script>
-
 </body>
 </html>
